@@ -1,0 +1,28 @@
+# Focus Timer — Tech Context
+
+## Tech Stack
+- Expo (React Native) with TypeScript
+- expo-router, expo ~57, react-native 0.86, react 19
+- Strict TypeScript (extends `expo/tsconfig.base`, strict mode)
+- Path aliases: `@/*` → `./src/*`, `@/assets/*` → `./assets/*`
+
+## Commands
+- Start dev server: `npx expo start` (press `w` for web)
+- Typecheck: `npx tsc --noEmit`
+- Tests: `npm test` (single run), `npm run test:watch`
+- Add packages: `npx expo install <package-name>` — never raw `npm install`/`yarn`
+- Lint: `npx expo lint`
+
+## Testing Setup
+- `jest-expo` preset with `@testing-library/react-native`
+- Hook tests use jest fake timers (`jest.useFakeTimers()`) for deterministic
+  countdown ticking
+- Component tests are light (render + accessibility labels); screens verified
+  by manual smoke test
+
+## Constraints
+- Strict mode: no `any` type anywhere
+- Every file under 120 lines
+- No third-party libraries without explicit user approval
+- V1 prohibitions: no audio, no haptics, no push notifications (see
+  `projectbrief.md`)

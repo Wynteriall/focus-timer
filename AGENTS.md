@@ -1,14 +1,9 @@
 # Focus Timer — Agent Instructions
 
-## Tech Stack
-- Expo (React Native) with TypeScript
-- expo-router, expo 57, react-native 0.86, react 19
-- Strict TypeScript (extends `expo/tsconfig.base`, strict mode)
-- Path aliases: `@/*` → `./src/*`, `@/assets/*` → `./assets/*`
-
 ## Commands
-- Start dev server: `npx expo start`
+- Start dev server: `npx expo start` (press `w` for web)
 - Typecheck: `npx tsc --noEmit`
+- Tests: `npm test` (single run), `npm run test:watch`
 - Add packages: `npx expo install <package-name>`
 - Lint: `npx expo lint`
 
@@ -18,6 +13,12 @@
 - Keep every file under 120 lines. Split any file that exceeds this limit.
 - Do not install third-party libraries without explicit user approval.
 
-## V1 Scope & Prohibitions
-- Scope: Build only an on-screen visual countdown with start, pause, and reset buttons.
-- Prohibitions: No audio, no sound effects, no haptics, and no push notifications.
+## V1 Scope
+On-screen visual countdown with start, pause, and reset buttons — nothing more.
+Prohibitions: no audio, no sound effects, no haptics, no push notifications.
+
+## Project Knowledge
+`memory-bank/` is the single source of truth for project knowledge
+(scope, architecture, context, progress). Read it before starting a task and
+keep it current after significant changes.
+
