@@ -11,9 +11,9 @@
   ];
 
   const presets = {
-    lagoon:  { blobCount: 1, blobSize: 1.05, morphSpeed: 0.18, blur: 90, grain: 0.045, parallax: 14, glowSize: 220, glowIntensity: 0.08 },
-    mist:    { blobCount: 4, blobSize: 0.55, morphSpeed: 0.35, blur: 70, grain: 0.06,  parallax: 22, glowSize: 180, glowIntensity: 0.12 },
-    tide:    { blobCount: 2, blobSize: 0.85, morphSpeed: 0.55, blur: 55, grain: 0.07,  parallax: 38, glowSize: 260, glowIntensity: 0.16 },
+    lagoon:  { blobCount: 9,  blobSize: 0.33, morphSpeed: 0.6,  blur: 54, grain: 0.035, parallax: 12, glowSize: 300, glowIntensity: 0.2 },
+    mist:    { blobCount: 15, blobSize: 0.30, morphSpeed: 1.0,  blur: 70, grain: 0.04,  parallax: 17, glowSize: 350, glowIntensity: 0.3 },
+    tide:    { blobCount: 14, blobSize: 0.33, morphSpeed: 1.0,  blur: 54, grain: 0.035, parallax: 17, glowSize: 400, glowIntensity: 0.3 },
   };
 
   function showVal(id) { $(id).nextElementSibling.textContent = p[id]; }
@@ -35,7 +35,7 @@
   sliders.forEach(function (s) { bind(s[0]); });
   bind('breathScale'); bind('breathPeriod');
   document.getElementById('timer').style.setProperty('--breath', '0.03');
-  document.getElementById('timer').style.setProperty('--breath-ms', '6000ms');
+  document.getElementById('timer').style.setProperty('--breath-ms', '12000ms');
 
   document.querySelectorAll('[data-preset]').forEach(function (btn) {
     btn.addEventListener('click', function () {

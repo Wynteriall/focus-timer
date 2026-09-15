@@ -10,9 +10,9 @@
   let bloom = 0, bloomT = -1; // one-shot "finished" swell envelope
 
   const params = {
-    blobCount: 5, blobSize: 0.44, morphSpeed: 1.5, blur: 55,
-    grain: 0.03, parallax: 60, glowSize: 400, glowIntensity: 0.5,
-    breathScale: 8, breathPeriod: 12, paused: false,
+    blobCount: 14, blobSize: 0.33, morphSpeed: 1.0, blur: 54,
+    grain: 0.035, parallax: 17, glowSize: 400, glowIntensity: 0.3,
+    breathScale: 3, breathPeriod: 12, paused: false,
   };
 
   const TAU = Math.PI * 2;
@@ -29,8 +29,9 @@
       dr: rand(0.05, 0.14),                        // drift radius
       d1: rand(0.25, 0.6), d2: rand(0.25, 0.6),    // drift speeds
       q1: rand(0, TAU), q2: rand(0, TAU),
-      sizeMul: rand(0.55, 1.6),                    // varied sizes
-      depth: rand(0.3, 1),                         // opacity + parallax depth
+      sizeMul: rand(0.25, 2.4),                    // strong size variety
+      depth: rand(0.12, 1),                        // opacity + parallax depth
+      blurMul: rand(0.4, 1.8),                     // per-blob blur variety
       tone: TONES[(Math.random() * TONES.length) | 0],
       fx: rand(1.2, 3.4), fy: rand(1.2, 3.4),      // shape frequencies
       a1: rand(0.08, 0.2), a2: rand(0.04, 0.12),   // shape amplitudes
@@ -74,6 +75,7 @@
       + mouse.y * params.parallax * b.depth * dpr;
     const base = params.blobSize * Math.min(W, H) * 0.33
       * b.sizeMul * (1 + bloom * 0.5);
+    ctx.filter = 'blur(' + params.blur * b.blurMul * dpr + 'px)';
     const c = b.tone;
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, base * 1.25);
     g.addColorStop(0, 'rgba(' + c[0] + ',' + (0.5 * A) + ')');
@@ -128,7 +130,6 @@
     ctx.fillRect(0, 0, W, H);
 
     syncCount();
-    ctx.filter = 'blur(' + params.blur * dpr + 'px)';
     for (const b of blobs) drawBlob(b, dt);
     ctx.filter = 'none';
 

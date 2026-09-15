@@ -78,7 +78,7 @@ Single centered column, full viewport:
 | State    | Digits                        | Blob                  | Bar              |
 | -------- | ----------------------------- | --------------------- | ---------------- |
 | Idle     | full presence, typeable       | living drift          | full, visible    |
-| Running  | breathe: 8% scale over a 12s cycle | living drift     | depletes         |
+| Running  | breathe: 3% scale over a 12s cycle | living drift     | depletes         |
 | Paused   | soften to ~70% opacity        | stills (nearly frozen)| freezes          |
 | Finished | one glow pulse, settles ~5% larger, then rest | one slow deep swell, then very still | fades out quietly |
 
@@ -89,21 +89,25 @@ Single centered column, full viewport:
 
 ### Background — living blobs (tuned values locked)
 
-- 5 liquid blobs (slider range 1–5), each an organic outline perturbed by two
-  layered sines; radial green→white gradient fill; 55px gaussian blur
+- 9–15 liquid blobs (default 14, slider range 1–15), each an organic outline
+  perturbed by two layered sines; radial green→white gradient fill
 - **Each blob is autonomous and unique:** random anchor point, own drift
   orbit (slow lissajous wander), own shape frequencies/amplitudes, own size
-  (0.55–1.6× of the 0.44 size scalar), own opacity depth (0.3–1.0, also
-  driving parallax depth), and one of 3 green depth tones
+  (0.25–2.4× of the 0.33 size scalar — strong size hierarchy), own opacity
+  depth (0.12–1.0, also driving parallax depth), own blur (0.4–1.8× of the
+  54px base — foreground sharper, background hazier), and one of 3 green
+  depth tones
 - **Lifespan ~60s** (50–70s): blobs fade in ~8s, live, fade out ~12s, and
   are replaced by a freshly spawned blob — the background never repeats
-- Morph speed 1.5 (reference scale); paused state slows global time to ~3%
+- Morph speed 1.0 (reference scale); paused state slows global time to ~3%
+- Randomness re-rolls on every spawn: with ~60s lifespans and 14 blobs, the
+  field re-composes continuously and never repeats
 
 ### Atmosphere (tuned values locked)
 
-- Grain: full-viewport film grain, intensity 0.03, subtle live flicker
-- Parallax: blobs shift with cursor by depth, strength 60px (max)
-- Cursor glow: soft green radial glow follows cursor — 400px, intensity 0.5
+- Grain: full-viewport film grain, intensity 0.035, subtle live flicker
+- Parallax: blobs shift with cursor by depth, strength 17px
+- Cursor glow: soft green radial glow follows cursor — 400px, intensity 0.3
 - Buttons: borderless text; hover blooms a soft glowing underline (~200ms);
   disabled = 40% opacity, never removed from layout
 - Auto-hide: controls fade out after ~3s without mouse movement; fade in on

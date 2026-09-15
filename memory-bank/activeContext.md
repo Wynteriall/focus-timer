@@ -28,7 +28,6 @@ into `design.md` (replacing `TUNE` markers).
 - Prototype launched via `Invoke-Item` for user tuning
 
 ## Next Steps
-- User verifies the reworked living-blob background in the prototype
 - User must explicitly approve the font package
   (`@expo-google-fonts/cormorant-garamond`) before install
 - Implement redesign in slices: `theme.ts` tokens → `CountdownDisplay`
@@ -39,17 +38,18 @@ into `design.md` (replacing `TUNE` markers).
 - Update `memory-bank/progress.md` after implementation slices land
 
 ## Decisions & Considerations
-- User-tuned background values are locked into `design.md` §8: 5 blobs,
-  size 0.44, morph 1.5, blur 55, grain 0.03, parallax 60, glow 400px/0.5,
-  breath 8%/12s
+- Final user-tuned values locked into `design.md` §8: 9–15 blobs
+  (default 14), size 0.33, morph 1.0, blur 54, grain 0.035, parallax 17,
+  glow 400px/0.3, breath 3%/12s
 - Blobs are "living": autonomous drift (lissajous), per-blob random shape /
-  size / opacity depth / green tone, ~60s lifespan with 8s fade-in and 12s
-  fade-out, replaced by new spawns; cursor parallax still applies per depth
+  size (0.25–2.4×) / opacity depth (0.12–1.0) / blur (0.4–1.8×) / green
+  tone, ~60s lifespan with 8s fade-in and 12s fade-out, replaced by new
+  spawns; cursor parallax still applies per depth
 - Light-only theme for V1; dark "dusk" variant deferred to a future version
 - Font choice: Cormorant Garamond weight 300 (needs approval per rules)
 - Type-in editing only in Idle; continuous right-aligned digit stream
   (`1230` → 12:30, `13000` → 01:30:00); hours appear only when needed
-- States: running digits breathe (8% scale, 12s cycle); paused = blob stills +
+- States: running digits breathe (3% scale, 12s cycle); paused = blob stills +
   digits 70% opacity; finished = one blob swell + single glow pulse, bar
   fades out quietly
 - Controls auto-hide after ~3s of no mouse movement; touch toggles on tap
