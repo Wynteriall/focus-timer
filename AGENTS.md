@@ -14,8 +14,10 @@
 - Do not install third-party libraries without explicit user approval.
 
 ## V1 Scope
-On-screen visual countdown with start, pause, and reset buttons — nothing more.
+On-screen visual countdown with start, pause, and reset buttons, plus a
+type-in duration editor on the idle readout (automatic h/m/s formatting).
 Prohibitions: no audio, no sound effects, no haptics, no push notifications.
+Design source of truth: `design.md` (update it before changing styling).
 
 ## Project Knowledge
 `memory-bank/` is the single source of truth for project knowledge

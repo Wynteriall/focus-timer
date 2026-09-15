@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Timer — Design Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div id="scene">
+  <div id="bar-track"><div id="bar"></div></div>
+  <div id="timer">05:00</div>
+  <div id="controls">
+    <button class="ctl">Begin</button>
+    <button class="ctl">Pause</button>
+    <button class="ctl">Reset</button>
+  </div>
+</div>
+
+<aside id="panel">
+  <h1>Design Prototype</h1>
+  <div class="row presets">
+    <button data-preset="lagoon">Lagoon</button>
+    <button data-preset="mist">Mist</button>
+    <button data-preset="tide">Tide</button>
+  </div>
+  <label>blob count <input id="blobCount" type="range" min="1" max="5" step="1"><span class="val"></span></label>
+  <label>blob size <input id="blobSize" type="range" min="0.2" max="1.2" step="0.01"><span class="val"></span></label>
+  <label>morph speed <input id="morphSpeed" type="range" min="0.05" max="1.5" step="0.01"><span class="val"></span></label>
+  <label>softness (blur) <input id="blur" type="range" min="0" max="120" step="1"><span class="val"></span></label>
+  <label>grain <input id="grain" type="range" min="0" max="0.2" step="0.005"><span class="val"></span></label>
+  <label>parallax px <input id="parallax" type="range" min="0" max="60" step="1"><span class="val"></span></label>
+  <label>glow size <input id="glowSize" type="range" min="40" max="400" step="1"><span class="val"></span></label>
+  <label>glow intensity <input id="glowIntensity" type="range" min="0" max="0.5" step="0.01"><span class="val"></span></label>
+  <label>breath scale % <input id="breathScale" type="range" min="0" max="8" step="0.5"><span class="val"></span></label>
+  <label>breath period s <input id="breathPeriod" type="range" min="2" max="12" step="0.5"><span class="val"></span></label>
+  <div class="row">
+    <button id="state-cycle">State: running ▸</button>
+    <button id="copy">Copy values</button>
+  </div>
+  <p class="hint">Move the mouse for glow & parallax. Cycle states to preview
+  breathing / paused / finished. "Copy values" puts your tuned JSON on the
+  clipboard — paste it back to Cline to lock into design.md.</p>
+</aside>
+
+<script src="blob.js"></script>
+<script src="controls.js"></script>
+</body>
+</html>
