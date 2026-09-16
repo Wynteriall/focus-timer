@@ -3,8 +3,12 @@
 ## Tech Stack
 - Expo (React Native) with TypeScript
 - expo-router, expo ~57, react-native 0.86, react 19
+- `@expo-google-fonts/cormorant-garamond@^0.4.1` (approved) — digits load as
+  `CormorantGaramond_300Light` via `expo-font`'s `useFonts`
 - Strict TypeScript (extends `expo/tsconfig.base`, strict mode)
 - Path aliases: `@/*` → `./src/*`, `@/assets/*` → `./assets/*`
+- No `babel.config.js` in the repo: `@expo/metro-config` falls back to
+  `babel-preset-expo`, so reanimated/worklets need no extra config
 
 ## Commands
 - Start dev server: `npx expo start` (press `w` for web)
@@ -31,6 +35,9 @@
   by manual smoke test
 
 ## Constraints
+- Web target renders through react-native-web 0.21.2, which supports none of
+  RN 0.86's `filter`, `mixBlendMode`, or `experimental_backgroundImage` — those
+  silently no-op on web (they work on iOS/Android only)
 - Strict mode: no `any` type anywhere
 - Every file under 120 lines
 - No third-party libraries without explicit user approval

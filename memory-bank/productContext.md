@@ -18,6 +18,9 @@ is in shipping a correct, reliable countdown, not in features.
 5. When the countdown reaches zero, it stops (no repeat, no alarm in V1)
 
 ## UX Goals
-- Readout must be legible at a glance (large monospaced-style digits)
-- Controls are obvious and reachable with a thumb
-- Follows system light/dark theme
+- Graceful, calming, organic, airy, natural (design.md §2) — the countdown is
+  the only hero; no caption text anywhere on the page
+- Readout is a huge Cormorant Garamond 300 serif timer, directly typeable while
+  idle (continuous digit stream, automatic h/m/s formatting)
+- Controls are quiet borderless text buttons that fade away until input
+- Light-only palette for V1: warm paper white, deep green-charcoal, sage green

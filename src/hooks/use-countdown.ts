@@ -1,22 +1,33 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { MAX_DURATION_SECONDS } from '@/hooks/duration-format';
+
 export type Countdown = {
   remaining: number;
   isRunning: boolean;
+  /** True once the countdown has reached zero (cleared by reset/edit). */
+  isFinished: boolean;
+  /** Seconds the countdown resets to (updated by `setDuration` in idle). */
+  durationSeconds: number;
   start: () => void;
   pause: () => void;
   reset: () => void;
+  /** Commit a new duration while idle (type-in editor); no-op when running. */
+  setDuration: (seconds: number) => void;
 };
 
 /**
  * Owns all countdown state and logic.
  * - `start` begins (or resumes) the countdown; no-op while running or finished.
  * - `pause` freezes the countdown; no-op when not running.
- * - `reset` restores the initial duration and stops the countdown.
+ * - `reset` restores the current duration and stops the countdown.
+ * - `setDuration` re-targets the countdown while idle.
  */
 export function useCountdown(durationSeconds: number): Countdown {
+  const [duration, setDurationState] = useState(durationSeconds);
   const [remaining, setRemaining] = useState(durationSeconds);
   const [isRunning, setIsRunning] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     if (!isRunning) {
@@ -31,6 +42,7 @@ export function useCountdown(durationSeconds: number): Countdown {
   useEffect(() => {
     if (isRunning && remaining === 0) {
       setIsRunning(false);
+      setIsFinished(true);
     }
   }, [isRunning, remaining]);
 
@@ -46,8 +58,31 @@ export function useCountdown(durationSeconds: number): Countdown {
 
   const reset = useCallback(() => {
     setIsRunning(false);
-    setRemaining(durationSeconds);
-  }, [durationSeconds]);
+    setIsFinished(false);
+    setRemaining(duration);
+  }, [duration]);
 
-  return { remaining, isRunning, start, pause, reset };
+  const setDuration = useCallback((seconds: number) => {
+    setIsRunning((running) => {
+      if (running) {
+        return true;
+      }
+      const target = Math.max(0, Math.min(MAX_DURATION_SECONDS, Math.floor(seconds)));
+      setDurationState(target);
+      setRemaining(target);
+      setIsFinished(false);
+      return false;
+    });
+  }, []);
+
+  return {
+    remaining,
+    isRunning,
+    isFinished,
+    durationSeconds: duration,
+    start,
+    pause,
+    reset,
+    setDuration,
+  };
 }

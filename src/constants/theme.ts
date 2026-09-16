@@ -1,40 +1,44 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Design tokens from `design.md` §4 (light-only for V1 — a dark "dusk"
+ * theme is a future version). This file is the single source of truth for
+ * styling constants; update `design.md` before changing values here.
  */
-
-import '@/global.css';
 
 import { Platform } from 'react-native';
 
+const lightColors = {
+  /** warm paper white — page background */
+  background: '#FAFAF7',
+  /** deep green-charcoal — digits, text */
+  text: '#22301F',
+  /** sage green — progress bar, glow accents */
+  accent: '#5F8465',
+  /** pale mint — soft tints */
+  accentSoft: '#DCE9DC',
+  /** blob highlight */
+  backgroundElement: '#FFFFFF',
+  backgroundSelected: '#DCE9DC',
+  textSecondary: '#22301F',
+} as const;
+
 export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
+  light: lightColors,
+  // Light-only V1: dark keys exist only to satisfy the ThemeColor type.
+  dark: lightColors,
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
+/**
+ * Timer digits use Cormorant Garamond weight 300, loaded via `useFonts`
+ * in the root layout with family name `CormorantGaramond_300Light`.
+ * Controls stay on the quiet system sans.
+ */
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
@@ -50,6 +54,9 @@ export const Fonts = Platform.select({
     mono: 'var(--font-mono)',
   },
 });
+
+/** Family name registered by expo-font in `src/app/_layout.tsx`. */
+export const DigitFont = 'CormorantGaramond_300Light' as const;
 
 export const Spacing = {
   half: 2,

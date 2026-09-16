@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react-native';
 
+import { MAX_DURATION_SECONDS } from '@/hooks/duration-format';
+
 import { useCountdown } from '@/hooks/use-countdown';
 
 describe('useCountdown', () => {
@@ -121,5 +123,85 @@ describe('useCountdown', () => {
 
     expect(result.current.isRunning).toBe(false);
     expect(result.current.remaining).toBe(60);
+  });
+
+  it('setDuration re-targets the idle countdown and resets remaining', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.start());
+    await advanceSeconds(3);
+    await invoke(() => result.current.pause());
+    await invoke(() => result.current.setDuration(90));
+
+    expect(result.current.durationSeconds).toBe(90);
+    expect(result.current.remaining).toBe(90);
+    expect(result.current.isRunning).toBe(false);
+  });
+
+  it('setDuration is a no-op while running', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.start());
+    await advanceSeconds(3);
+    await invoke(() => result.current.setDuration(120));
+    await advanceSeconds(1);
+
+    expect(result.current.durationSeconds).toBe(60);
+    expect(result.current.remaining).toBe(56);
+    expect(result.current.isRunning).toBe(true);
+  });
+
+  it('reset restores the edited duration rather than the initial prop', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.setDuration(15));
+    await invoke(() => result.current.start());
+    await advanceSeconds(5);
+    await invoke(() => result.current.reset());
+
+    expect(result.current.remaining).toBe(15);
+    expect(result.current.isRunning).toBe(false);
+  });
+
+  it('flags finished at zero and clears it on reset', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.setDuration(2));
+    await invoke(() => result.current.start());
+    await advanceSeconds(3);
+
+    expect(result.current.isFinished).toBe(true);
+    expect(result.current.isRunning).toBe(false);
+
+    await invoke(() => result.current.reset());
+
+    expect(result.current.isFinished).toBe(false);
+    expect(result.current.remaining).toBe(2);
+  });
+
+  it('setDuration clears a finished countdown', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.start());
+    await advanceSeconds(61);
+    expect(result.current.isFinished).toBe(true);
+
+    await invoke(() => result.current.setDuration(45));
+
+    expect(result.current.isFinished).toBe(false);
+    expect(result.current.remaining).toBe(45);
+  });
+
+  it('setDuration floors and clamps to the entry cap', async () => {
+    const { result } = await renderHook(() => useCountdown(60));
+
+    await invoke(() => result.current.setDuration(10.9));
+    expect(result.current.remaining).toBe(10);
+
+    await invoke(() => result.current.setDuration(999999));
+    expect(result.current.durationSeconds).toBe(MAX_DURATION_SECONDS);
+
+    await invoke(() => result.current.setDuration(-5));
+    expect(result.current.remaining).toBe(0);
   });
 });
