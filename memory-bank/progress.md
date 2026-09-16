@@ -15,6 +15,8 @@
 - Light/dark themed countdown readout (mono, tabular digits)
 - Start / Pause / Resume / Reset with correct state transitions
 - Verification loop: `npx tsc --noEmit` (clean), `npm test` (19/19 pass)
+- Dev environment verified end-to-end: `npm ci` clean install, `npx expo start`
+  boots (Metro healthy on :8081, web bundle OK)
 
 ## What's Left (V1)
 - [ ] Commit the V1 work
@@ -24,6 +26,9 @@
 - Test API notes (not bugs): @testing-library/react-native v14 requires
   awaited `render`/`renderHook`, and `userEvent` (not `fireEvent`) for presses
   to avoid leaking act scopes
+- Environment note: expo-doctor reports 11 patch-level bumps available
+  (`npx expo install --fix`) — benign SDK 57 drift, intentionally left to the
+  user so committed manifests stay authoritative
 
 ## Decision Log
 - Tabs removed: V1 is a single countdown screen
